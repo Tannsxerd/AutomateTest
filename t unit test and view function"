@@ -1,0 +1,36 @@
+[1mdiff --git a/lists/tests.py b/lists/tests.py[m
+[1mindex a3fea65..a9ce94e 100644[m
+[1m--- a/lists/tests.py[m
+[1m+++ b/lists/tests.py[m
+[36m@@ -1,6 +1,13 @@[m
+ from django.test import TestCase[m
+[32m+[m[32mfrom django.http import HttpRequest[m[41m  [m
+[32m+[m[32mfrom lists.views import home_page[m
+ [m
+ [m
+[31m-class SmokeTest(TestCase):[m
+[31m-    def test_bad_maths(self):[m
+[31m-        self.assertEqual(1 + 1, 3)[m
+\ No newline at end of file[m
+[32m+[m[32mclass HomePageTest(TestCase):[m
+[32m+[m[32m    def test_home_page_returns_correct_html(self):[m
+[32m+[m[32m        request = HttpRequest()[m[41m  [m
+[32m+[m[32m        response = home_page(request)[m[41m  [m
+[32m+[m[32m        html = response.content.decode("utf8")[m[41m  [m
+[32m+[m[32m        self.assertIn("<title>To-Do lists</title>", html)[m[41m  [m
+[32m+[m[32m        self.assertTrue(html.startswith("<html>"))[m[41m  [m
+[32m+[m[32m        self.assertTrue(html.endswith("</html>"))[m[41m  [m
+\ No newline at end of file[m
+[1mdiff --git a/lists/views.py b/lists/views.py[m
+[1mindex 91ea44a..4e4d11b 100644[m
+[1m--- a/lists/views.py[m
+[1m+++ b/lists/views.py[m
+[36m@@ -1,3 +1,5 @@[m
+[31m-from django.shortcuts import render[m
+[32m+[m[32mfrom django.http import HttpResponse[m
+ [m
+[31m-# Create your views here.[m
+[32m+[m
+[32m+[m[32mdef home_page(request):[m
+[32m+[m[32m    return HttpResponse("<html><title>To-Do lists</title></html>")[m
+\ No newline at end of file[m
